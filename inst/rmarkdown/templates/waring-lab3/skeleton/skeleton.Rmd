@@ -1,0 +1,117 @@
+---
+title: "Visualizing Interval Ratio Variables"
+output: html_document
+author: ""
+---
+
+This template will begin the exploration of interval ratio variables in  the _ships_ data 
+set as a whole. This will let us do two things
+ - describe the overall distribution of the ships data.
+ - describe how your ship compares to this overall distribution.
+ 
+Start by loading the lehmansociology library.
+
+```{r, echo=FALSE, message=FALSE}
+# Load your libraries here
+
+library('lehmansociology')
+# Let's rename the Length of Voyage  variable to a shorter name with no spaces.
+ships <-dplyr::rename(ships, 
+                      Days = `Length of voyage`, 
+                      Women_passengers = `No. of women passengers`)
+```
+Here are the values of Days (Length of voyage in days) in their original order and sorted.
+Add in the code to get the data on Women_passengers.
+````{r}
+ships$Days
+sort(ships$Days)
+````
+
+Let's represent this data visually using  a Cleveland dot plot. This shows each of the individual points for the ships. We will do it with the data sorted.  Notice that this is different from the
+Wilkerson dot plots we have made before (and which we will make later in this template). 
+
+```{r}
+    ggplot(ships, aes(y=reorder(`Name of Ship`, Days) , x=Days ))+
+        geom_point() +
+        geom_segment(aes(yend = `Name of Ship`), xend = 0, color = "grey50") +
+        ggtitle("Length of Voyage in Days in the Ships Data") +
+        ylab("Name of Ship")
+
+```
+
+Make a Wilkerson dot plot for the number of women passengers. 
+
+```{r}
+
+
+
+```
+
+
+#### Summarize your two plots in a paragraph. Describe the overall distribution 
+#### and where your ship fits in.
+
+
+
+
+
+In R we have functions that help make it easier to get certain statistics. The example shows how to 
+get the minimum.  Get the maximum for Days and for Women_passengers.
+
+The minimum value of Days is `r min(ships$Days)`.
+The maximum value of Days is `r  `.
+
+
+
+## Displaying interval and ratio variables
+
+There are a number of ways to visualize interval data. Two are a Cleveland dot plot and a box and 
+whiskers plot.  Below are examples of creating these for the Days variable. 
+After trying these and studying how they work, create the same plots for the number of women.
+
+```{r}
+ggplot(ships, aes(x = Days)) + scale_x_continuous(breaks=seq(0,25,1)) +
+    geom_dotplot(binwidth = 1) +
+     ggtitle("Length of Voyage in Days in the Ships Data")
+
+```
+Now let's make a box and whiskers plot.
+
+```{r}
+
+ggplot(ships, aes(y = Days, x=factor(0))) + 
+    geom_boxplot() +
+    coord_flip() +
+    scale_x_continuous(breaks=seq(0,25,1)) +
+    ggtitle("Length of Voyage in Days in the Ships Data")
+
+```
+
+Now let's combine them.
+
+```{r}
+
+ggplot(ships, aes(y = Length, x=factor(0))) + 
+    geom_boxplot() + 
+    geom_dotplot(binaxis='y', stackdir='center', binwidth = 1) +
+    coord_flip() +
+    ggtitle("Length of Voyage in Days in the Ships Data")
+
+```
+
+#### Write a summary of the distributions of the two variables based on the data visualizations.
+
+
+
+####All of these graphs, tables and other visualizations display the same information but in different formats.  Describe what you learned from each one and when you might use each one. 
+
+For example, what aspect of the data does each one highlight? What does each one display better or
+worse than the others?
+
+
+
+
+
+
+
+

@@ -1,0 +1,163 @@
+---
+title: "Data Wrangling"
+output: html_document
+---
+
+Data wrangling in the process of working with a data set you have and making it more usable.
+This can include doing such things as:  
+
+  * correctly assigning NA values.  
+  * making the variable names or labels more useful.  
+  * making sure the variables have correct levels of measurement  
+  * recoding variables  
+  * creating new variables from existing variables.  
+ 
+We have already done some of this informally. This lab will tie together several examples and show
+you how to save your modified file for future use. 
+
+ 
+```{r, echo=FALSE, message=FALSE}
+# Load your libraries here
+
+library('lehmansociology')
+
+```
+
+Previously we learned how to use dplyr::rename to change variable names to ones that are shorter and don't contain spaces.  That code is given below to start you off.
+
+Rename at least 3 more variables. Follow the same pattern and make sure that the ')' is at the 
+very end of the command.
+
+
+````{r}
+
+ships <-dplyr::rename(ships, 
+                      Days = `Length of voyage`, 
+                      Women_passengers = `No. of women passengers`)
+
+````
+
+The `ships` data set contains an assortment of variables that describe the ships, the collectivity
+of passsengers, and the disaster.   
+If we think them through logically we can use them to create additional helpful variables.
+
+First let's create two new variables, the number of male passengers and the number of crew members.
+Remember that in the original data set `No. of passengers` is the total passengers, 
+`No. of women passengers` is the number of women
+passengers, and `Ship size ` is the total number of people including passengers and crew.
+
+#### How would you use these variablesto find the number of male passengers?
+
+
+#### How would you use these variables to find the number of crew members?
+
+
+
+
+Set up the code below to create the new variables.
+
+Remember that you will have to use the new names you created if you modified the variable 
+names you need.
+
+````{r}
+
+ships$No_of_male_passengers <- 
+ships$No_of_crew <- 
+
+````
+
+Now get the summary data for the number of male passengers, number of women passengers and 
+number of crew members. (Remember the function you need to get this)
+```{r}
+
+```
+
+_When data wrangling it is always important to check your results as you go along. Make sure
+that they make sense logically (sanity check).  For example the number of male passengers should
+not be higher than the number of passengers!._
+
+### How do the three variables compare to each other in terms of central tendency (mean and median) and 
+### variation (range and interquartile range)?
+(Feel free to use additional R functions of your choice to get this information)
+
+
+Elander and Erixson suggest that there may be important differences in gender norms after
+World War I. World War I ended in November 1918, so lets create a new variable that 
+divides the years into two groups, up through 1918 and after 1918 using the cut() function.
+
+Your code should look like this:
+ `   cut(ships$Year, breaks = c(min(ships$Year), 1919, max(ships$Year)), labels = c("1918 or earlier", "After 1918"), include.lowest = TRUE)  `
+ 
+ But you should assign it to a new variable in the ships dataset.  Also if you changed the variable
+ name of Year you should adjust the code.
+ 
+ #### What does the 1919 represent?
+ 
+ 
+ #### Why is it smarter to use min() and max() instead of looking up the exact year by viewing the 
+ #### dataset? 
+ 
+ 
+ #### What do you think the include.lowest argument does?   Is there another way you could have 
+ #### achieved the same thing? 
+ 
+ 
+
+```{r}
+
+```
+
+
+You need to check your recoding.  Do this by first running a frequency()   on your new variable and 
+making sure that the numbers look reasonable and that all 18 ships have values.
+
+Then check in more detail by running a cross tabulation of the year variable and your new variable.
+
+This is what the crosstabulation code  should look like, but with your variable names.
+
+   crosstab(ships, row.vars = "Time_period", col.vars = "Year")             
+
+
+```{r}
+
+
+
+```
+
+#### Why do you think it is important to check your work when you modify data?
+
+Once you are satisfied with your data wrangling, you should save your own individualized copy 
+of the ships data set.   
+
+First create a folder called data in the files tab using the "New Folder" button.
+
+Let's call the new dataset myships.   First assign the ships data to myships. Then use the save 
+command as shown.
+
+
+```{r}
+# Do the assignment first (you need to supply the code).
+
+# Now save.
+save(file = "data/myships.Rda", myships)
+
+```
+
+Now in the future you will be able to load (using the load() command) your individualized dataset. But if you need to you
+can always get the original ships data back from the lehmansociology package. 
+
+Documenting your changes to code is one of the important features of "reproducable research." 
+Someone else should be able to look at your files and understand exactly what you did and 
+why you did it.   
+
+This also helps you because you might come back to the work after several months of not working on
+it or because something needs to be updated in some way. 
+
+#### Why do you think that doing reproducible research is considered a best practice? 
+
+
+
+#### Why does using a markdown file with both text and code help with reproducible research?
+
+
+

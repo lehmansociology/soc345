@@ -1,0 +1,82 @@
+---
+title: ""
+author: ""
+output: pdf_document
+---
+
+
+ 
+```{r, echo=FALSE, message=FALSE}
+# Load your libraries here
+
+library('lehmansociology')
+library('ggplot2')
+
+
+```
+
+# Introduction
+
+
+
+
+# Data Description 
+
+This should include a discussion of the ships dataset. (Variables, where it came from, what 
+the limitations are.)
+
+## Analysis Variable 1
+
+Introduction
+
+```{r}
+
+```
+
+Discussion
+
+## Variable 2 
+
+
+
+Introduction
+
+```{r}
+
+```
+
+Discussion
+
+
+## Variable 3
+
+Introduction
+
+```{r}
+
+```
+
+Discussion
+
+
+## Variable 4
+
+Introduction
+
+```{r}
+
+```
+
+Discussion
+
+
+More variables as needed.
+
+# Conclusion
+
+Text
+
+
+#References
+Any references.
+Use (ASA style)[http://www.asanet.org/documents/teaching/pdfs/Quick_Tips_for_ASA_Style.pdf].  

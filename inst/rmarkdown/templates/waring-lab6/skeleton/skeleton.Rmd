@@ -1,0 +1,126 @@
+---
+title: "Making Comparisons"
+output: html_document
+---
+
+Before starting this template make sure that you have the saved data set called myships.Rda in the 
+data folder. If you do not have it at all you need to go back and re-run the data wrangling lab.
+If the name is different you need to change the code chunk below to match it.
+
+```{r, echo=FALSE, message=FALSE}
+# Load your libraries here
+
+library('lehmansociology')
+load(file="~/data/myships.Rda")
+
+```
+
+Now that you have your data, run a frequency for your time period variable (whatever name you 
+gave it--make sure to check this).
+Also run a frequency table for the Quick variable making sure you use the correct name if 
+you changed it.
+
+````{r}
+frequency(myships$timeperiod)
+````
+
+Now we will separate the ships into two separate data sets using the time period variable.
+The example shows you to get the earlier group. You need to add the code to get the data set with
+just  the later group.
+
+```{r}
+shipsearly<-subset(myships,myships$timeperiod == "1918 or earlier")
+shipslate<- 
+
+```
+
+How can you check your work and make sure you have the right number of observations
+and right ships? 
+
+
+Do that now, either with code or explain in another way.
+
+
+
+Now run frequency tables for Quick for the two new data sets.
+
+```{r}
+
+```
+
+####Are the two time periods similar or different in terms of the chances of sinking quickly?
+Describe what you see in the results.
+
+
+
+Now get the mean proportion surviving for the two time periods using the two data sets.
+
+```{r}
+
+```
+
+
+###How do they compare? Do the two time periods differ in terms of mean proportion surviving?
+
+
+
+
+
+Could we make these analyses more compact?  Yes!
+
+If we go back to our complete data set (myships) we can use other functions that help us make
+comparisons.
+
+For Quick, since it is a nominal variable, let's use the cross tab function with
+time period as the column (x) variable (because it is the indepenent variable) and 
+Quick as the row (y) since it is the dependent.  Make sure to add a title.
+
+Next add crosstab() with format="col_percent".  With the independent variable in the column, the
+column percent lets us compare the groups defined by the independent variable.
+
+```{r}
+crosstab(myships, row.vars = "Quick", col.vars = "timeperiod", format="freq", title = "")
+
+
+```
+
+### How do the crosstabs relate to the separate analyses we did earlier?
+
+Do a second crosstab with a different variable of your choice
+
+```{r}
+
+```
+
+### Describe your results.
+
+
+Now use your two data sets to get the mean proportion surviving for the two time periods.
+
+```{r}
+
+
+
+```
+
+### How do the tme periods compare? 
+
+Now let's get the means without using separate data sets. We will use dplyr to do this.
+Be sue to check your variable names. 
+
+ Once you have seen how it works, using commas, add at least two more interval variables to 
+ the analysis and also add the variance using var(). 
+
+```{r}
+library(dplyr)
+myships_grouped <- group_by(myships, timeperiod)
+dplyr::summarise(myships_grouped, 'Prop Surviving' = mean(prop_survival))
+```
+
+### How did the two time periods compare?  
+
+
+### Which way do you perfer the presentations, as separate tables or as combined table?
+
+
+

@@ -1,0 +1,89 @@
+---
+title: "Quantiles, Quartiles, Median and more"
+output: html_document
+author: ""
+---
+
+This template will explor interval ratio variables in  the _ships_ data using the concept of
+quantiles and the special named quantiles, the median and quartiles. 
+This will let us do two things
+ - describe the overall distribution of the ships data numerically.
+ - describe how your ship compares to this overall distribution.
+ 
+Start by loading the lehmansociology library and renaming some of the variables.
+
+```{r, echo=FALSE, message=FALSE}
+# Load your libraries here
+
+library('lehmansociology')
+# Let's rename the Length of Voyage  variable to a shorter name with no spaces.
+ships <-dplyr::rename(ships, 
+                      Days = `Length of voyage`, 
+                      Women_passengers = `No. of women passengers`)
+```
+
+Numeric variables (ratio or interval) have the special characteristics that they can be 
+sorted from low to high (or high to low) and there is a fixed distance between values meaning
+that the distance from 2 to 3 is the same as the distance from 7 to 8 or 99 to 100.  
+
+Ordinal variables also can be sorted, but they do not have a fixed distance. So for example, size divided up into small,
+medium or large or class divided into upper class, middle class, lower class do not have numeric
+values that can be added or subtracted. 
+
+
+
+In previous work, we divided our sample of ships into halves and then quarters based on the number 
+of days in the voyage.  One thing that we saw is that it is not so easy to do this when
+there are ties (observatiosn with the same values) or even numbers (because there are a range 
+of values that could all be used to do the dividing).
+
+How exactly to solve these problems is something that statisticians have tried to solve in a 
+variety of ways.
+
+Do ?quantile and scroll down to read about "Types".
+
+#### How many different ways will R let you calculate quantiles?  Which one is the default? 
+(Don't worry if you don't understand the details, just notice that they are different!)
+
+#### What are the two groups?
+
+Now let's use the different ways of calculating quantiles on the Days data. Use the first
+one as an example and then add your own.
+
+```{r}
+quantile(ships$Days, probs=c(0, .25, .5, .75, 1), type = 1)
+
+
+
+```
+
+#### What do the probs represent?
+
+
+####  How do the first three calculations differ from the later ones? Why do you think that is?
+
+
+####  Did any of the calculations agree with what you got by hand? If not how did they differ?
+
+
+ 
+#### Do you think the differences in results are important? Why might they be important in some 
+#### cases but not others?
+
+
+
+Try using the fivenum() and summary() function on Days.  
+```{r}
+
+
+
+```
+
+#### Which version of quantiles do you think fivenum and summary use?
+
+
+
+
+summary() is an important R function that is used on many different kinds of data. 
+
+
