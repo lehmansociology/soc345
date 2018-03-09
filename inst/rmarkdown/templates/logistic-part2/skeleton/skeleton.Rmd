@@ -1,0 +1,157 @@
+---
+title: ''
+output:
+  pdf_document: default
+  html_document: default
+---
+
+The real power of linear models is that they let you simultaneously 
+look at the impact of a number of separate independent variables.
+It's important that we do this all at once, because our indpendent
+variables are also associated with each other. For example, being 
+a crew member is associated with gender. Let's look at that relationship.
+ 
+```{r, echo=FALSE, message=FALSE}
+# Load your libraries here
+
+library('lehmansociology')
+load("~/data/RMS_Titanic.Rda")
+# Uncomment if you never added labels
+#RMS_Titanic$Survival2 <- RMS_Titanic$Survival
+#RMS_Titanic$Survival <- as.factor(RMS_Titanic$Survival)
+#RMS_Titanic$Survival <- ifelse(RMS_Titanic$Survival == "0", "Died", "Survived")
+#RMS_Titanic$SGender <- as.factor(RMS_Titanic$Gender)
+#RMS_Titanic$Gender <- ifelse(RMS_Titanic$Gender == "0", "Male", "Female")
+
+#Uncomment if you already added labels to Survival
+#RMS_Titanic$Survival2 <- ifelse(RMS_Titanic$Survival == "Died", 0, 1)
+
+
+```
+
+
+
+```{r}
+crosstab(Crew ~ Gender, data = RMS_Titanic, format= "col_percent")
+```
+```{r}
+crosstab(Gender ~ Crew, data = RMS_Titanic, format= "col_percent")
+```
+
+Is a person's gender related to whether they are a crew member or passenger?
+Explain the association.
+
+If you know someone is female, does that help you in terms of guessing if 
+they are a crew member?
+
+Now let's remember our glm bivariate models.
+
+```{r}
+results <- glm(Survival ~ Gender, data = RMS_Titanic, 
+               family = binomial(link = logit))
+coefficients(results)
+```
+```{r}
+results <- glm(Survival2 ~ Crew, data = RMS_Titanic, 
+               family = binomial(link = logit))
+coefficients(results)
+
+```
+
+The problem is, how much of the impact of gender due to the 
+females almost completely being passengers? 
+How much is the impact of crew due to crew members being
+almost completely male?
+
+We need to look at them at the same time in order to *control* for the
+impact of the other variable.
+
+We could do a more complex cross tab
+
+```{r}
+
+crosstab(Survival2 ~ Gender + Crew, data = RMS_Titanic, 
+         format = "col_percent")
+
+```
+
+What does this table tell us?  
+
+Imagine if we had  three or more variables that we wanted to combine.
+
+Now let's look at the glm.
+
+```{r}
+results <- glm(Survival2 ~ Gender + Crew, data = RMS_Titanic, 
+               family = binomial(link = logit))
+coefficients(results)
+```
+
+We have 4 combinations:
+- Male Passenger  (Gender = 1, Crew = 1)
+- Male Crew  (Gender = 1, Crew = 0)
+- Female Passenger (Gender = 0, Crew = 1)
+- Female Crew (Gender = 0, Crew = 0)
+
+Write out the prediction equation for each group (use 2 decimals) and 
+calculate the predicted logit for each group.  
+
+- Male Passenger
+  
+  
+- Male Crew
+  
+  
+- Female Passenger
+  
+  
+- Female Crew
+  
+  
+
+Let's use R to do the calculations of the logits and predicted
+probabilities.
+```{r}
+table(results$linear.predictors)
+table(fitted.values(results))
+```
+
+What is the relationship between the two outputs?
+
+
+How do these results compare to our crosstab with two independent variables?
+
+
+
+\newpage
+One thing you should notice is that when we use multiple independent
+variables the results of the predicted probabilities no longer 
+perfectly match the cross tabs.  This is because there might be a separate
+impact of the _combination_ of two variables that is different than that
+of each variable separately. So there could be a special effect of 
+being a female crew member that is different than the sum of the two 
+separate effects.  These kinds of effects are called interactions and are
+very common in sociology. 
+
+This shows how to include an interaction in your model.
+```{r}
+results <- glm(Survival ~ Gender + Crew + Gender*Crew, data = RMS_Titanic, 
+                family = binomial(link = logit))
+coefficients(results)
+```
+
+Notice that there is now one extra coefficient which represents the effect 
+of being a male passenger.  For all other groups this coeffecient would
+be multiplied by 0 to get the lineor predictions.
+
+```{r}
+table(results$linear.predictors)
+table(fitted.values(results))
+```
+
+
+Overall, what is the relationship between gender, role on the ship (crew or 
+passenger) and survival? Use numbers to support your statements.
+
+
+
