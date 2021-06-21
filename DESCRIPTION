@@ -1,10 +1,11 @@
 Package: soc345
 Type: Package
 Title: Soc 345 materials
-Version: 0.1.0
+Version: 0.1.2
 Author: person("Elin", "Waring", email="elin.waring@gmail.com", role = "aut")
 Maintainer: Elin Waring <elin.waring@gmail.com>
 Description: Supporting materials for students and faculty in SOC 345
 License: TBD
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 7.1.1
